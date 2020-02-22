@@ -28,6 +28,17 @@ Xft.dpi: <magic-number>
 ```
 
 
-Then restart your Xsession, ie. logout->login.
+Then restart your Xsession, so you logout and login.
 
-All your frames are readable.
+>All your frames are readable.
+
+
+Allow yourself some extra tweaking with these other values:
+```
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+```
