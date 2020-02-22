@@ -12,15 +12,6 @@ The dpi value is computed via by:
 pixels/inch
 ```
 
-So run this to get an calculation for x, y:
-```
-$ ./find-dpi.sh
-Xdpi: 283
-Ydpi: 282
-```
-
-choose a number by coin toss as the magic dpi number.
-
 create a file `~/.Xresources` and set the dpi value
 
 ```
@@ -30,7 +21,22 @@ Xft.dpi: <magic-number>
 
 Then restart your Xsession, so you logout and login.
 
->All your frames are readable.
+
+# find the magic number for your screen
+
+>and all your frames are great again.
+
+
+Run this:
+```
+$ ./find-dpi.sh
+
+echo 'Xft.dpi: <magic-number>' >> ~/.Xresources
+
+```
+
+
+
 
 
 Allow yourself some extra tweaking with these other values:

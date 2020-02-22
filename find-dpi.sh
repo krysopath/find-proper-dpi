@@ -1,12 +1,17 @@
 #!/bin/bash
 
-screen0=$(xrandr \
+pixdim2dpi () {
+	bc -l <<< "$1/$2" | awk '{ print int($1) }'
+}
+
+resolution=$(xrandr \
 	| grep -w connected \
-	| egrep -o 'connected ([0-9]*x[0-9]*)')
+	| egrep -o 'connected ([0-9]*x[0-9]*)'\
+	| cut -d' ' -f2)
 
-x_pixel=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f1)
+x_pixel=$(cut -d'x' -f1 <<<$resolution)
+y_pixel=$(cut -d'x' -f2 <<<$resolution)
 
-y_pixel=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f2)
 
 inches=$(xrandr \
 	| grep -w connected \
@@ -17,8 +22,5 @@ inches=$(xrandr \
 	| tr '\n' ' ')
 
 
-xdpi=$(bc -l <<< "$x/$(awk '{ print $1 }' <<<"$inches")")
-ydpi=$(bc -l <<< "$y/$(awk '{ print $2 }' <<<"$inches")")
-
-echo "Xdpi: $(awk '{print int($1)}' <<<$xdpi)"
-echo "Ydpi: $(awk '{print int($1)}' <<<$ydpi)"
+dpi=$(pixdim2dpi $x_pixel $(awk '{ print $1 }' <<<"$inches"))
+echo -e "\necho 'Xft.dpi: $dpi' >> ~/.Xresources"
