@@ -1,12 +1,20 @@
 #!/bin/bash
 
-screen0=$(xrandr | grep -w connected | egrep -o 'connected ([0-9]*x[0-9]*)')
+screen0=$(xrandr \
+	| grep -w connected \
+	| egrep -o 'connected ([0-9]*x[0-9]*)')
 
-x=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f1)
+x_pixel=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f1)
 
-y=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f2)
+y_pixel=$(cut -d' ' -f2 <<< $screen0| cut -d'x' -f2)
 
-inches=$(xrandr | grep -w connected | egrep -o '([0-9]*?mm)' | egrep -o '([0-9]*?)' | while read number; do echo "($number/10)/2.54"| bc -l; done| tr '\n' ' ')
+inches=$(xrandr \
+	| grep -w connected \
+	| egrep -o '([0-9]*?mm)' \
+	| egrep -o '([0-9]*?)' \
+	| while read number; 
+		do echo "($number/10)/2.54" | bc -l; done \
+	| tr '\n' ' ')
 
 
 xdpi=$(bc -l <<< "$x/$(awk '{ print $1 }' <<<"$inches")")
